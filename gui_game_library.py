@@ -32,6 +32,11 @@ class Library(object):
         # Close datafile    
         datafile.close()
         
+class MainMenu(tk.Frame):
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.lbl_title = tk.Label(text= "Game Library", font = TITLE_FONT)
+        self.lbl_title.grid(row = 0, column = 0, sticky = "news")
         
         
 # Functions/global functions
@@ -43,5 +48,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Game Library")
     root.geometry("500x500")
+    main_menu = MainMenu()
+    
     
     root.mainloop()
