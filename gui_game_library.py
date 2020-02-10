@@ -6,7 +6,14 @@
 
 import pickle
 import data_reboot as dr
+import tkinter as tk
+from tkinter import scrolledtext
 
+# Constants
+TITLE_FONT = ("Times New Roman", 24)
+BUTTON_FONT = ("Arial", 15)
+
+# Classes
 class Library(object):
     def __init__(self):
         
@@ -24,3 +31,15 @@ class Library(object):
         
         # Close datafile    
         datafile.close()
+        
+        
+        
+# Functions/global functions
+
+
+## Main
+if __name__ == "__main__":
+    content = Library()
+
+
+# mainloop
