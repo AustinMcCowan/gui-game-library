@@ -40,6 +40,8 @@ class Library(object):
 ## Main
 if __name__ == "__main__":
     content = Library()
-
-
-# mainloop
+    root = tk.Tk()
+    root.title("Game Library")
+    root.geometry("500x500")
+    
+    root.mainloop()
