@@ -49,6 +49,6 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
     main_menu = MainMenu()
-    
+    main_menu.grid(row = 0, column = 0)
     
     root.mainloop()
