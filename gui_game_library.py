@@ -64,6 +64,44 @@ class MainMenu(tk.Frame):
         self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
         self.btn_save.grid(row = 5, column = 0)        
         
+class SearchFilters(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, master=parent)
+        self.lbl_print_filers = tk.Label(self, text="Print Filters")
+        self.lbl_print_filers.grid(row=0, column=0, columnspan=6)
+        
+        self.chk_genre = tk.Checkbutton(self)
+        self.chk_genre.grid(row=1, column=0)
+            
+        self.chk_title = tk.Checkbutton(self)
+        self.chk_title.grid(row=2, column=0)
+        
+        self.chk_developer = tk.Checkbutton(self)
+        self.chk_developer.grid(row=3, column=0)
+        
+        self.chk_publisher = tk.Checkbutton(self)
+        self.chk_publisher.grid(row=4, column=0) 
+        
+        self.chk_system = tk.Checkbutton(self)
+        self.chk_system.grid(row=1, column=2) 
+        
+        self.chk_release = tk.Checkbutton(self)
+        self.chk_release.grid(row=2, column=2) 
+        
+        self.chk_rating = tk.Checkbutton(self)
+        self.chk_rating.grid(row=3, column=2) 
+        
+        self.chk_mode = tk.Checkbutton(self)
+        self.chk_mode.grid(row=4, column=2) 
+        
+        self.chk_price = tk.Checkbutton(self)
+        self.chk_price.grid(row=1, column=4) 
+        
+        self.chk_beat = tk.Checkbutton(self)
+        self.chk_beat.grid(row=2, column=4) 
+        
+        self.chk_purchase = tk.Checkbutton(self)
+        self.chk_purchase.grid(row=3, column=4)     
         
 class Search(tk.Frame):
     def __init__(self):
@@ -83,6 +121,9 @@ class Search(tk.Frame):
         self.ent_search_for = tk.Entry(self)
         self.ent_search_for.grid(row=4, column=0, columnspan=3)
         
+        self.search_filters = SearchFilters(self)
+        self.search_filters.grid(row=1, column=3, rowspan=4, columnspan=3)
+        
         self.scrolled_text = ScrolledText(self, height=8, width=40)
         self.scrolled_text.grid(row=5, column=0, columnspan=6)
             
@@ -95,6 +136,35 @@ class Search(tk.Frame):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
         self.btn_clear.grid(row=6, column=4, columnspan=2)        
         
+class Edit(tk.Frame):
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
+        self.lbl_title.grid(row=0, column=0, columnspan=2)
+        
+        self.drp_titles = tk.Entry(self)
+        self.drp_titles.grid(row=1, column=0, columnspan=2)
+        
+        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
+        self.btn_cancel.grid(row=2, column=0)
+        
+        self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
+        self.btn_okay.grid(row=2, column=1)
+
+class Remove(tk.Frame):
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
+        self.lbl_title.grid(row=0, column=0, columnspan=2)
+        
+        self.drp_titles = tk.Entry(self)
+        self.drp_titles.grid(row=1, column=0, columnspan=2)
+        
+        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
+        self.btn_cancel.grid(row=2, column=0)
+        
+        self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT)
+        self.btn_remove.grid(row=2, column=1)        
 # Functions/global functions
 
 
@@ -105,10 +175,13 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
     main_menu = MainMenu()
-    main_menu.grid(row = 0, column = 0, sticky = 'news')
+    main_menu.grid(row=0, column=0, sticky ='news')
     
     search_menu = Search()
-    search_menu.grid(row = 0, column = 0, sticky = 'news')
+    search_menu.grid(row=0, column=0, sticky='news')
+    
+    edit_menu = Edit()
+    edit_menu.grid(row=0, column=0, sticky='news')
     
     search_menu.tkraise()
     root.mainloop()
