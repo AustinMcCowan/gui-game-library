@@ -7,7 +7,7 @@
 import pickle
 import data_reboot as dr
 import tkinter as tk
-from tkinter import scrolledtext
+from tkinter.scrolledtext import ScrolledText
 
 # Constants
 TITLE_FONT = ("Times New Roman", 24)
@@ -31,6 +31,17 @@ class Library(object):
         
         # Close datafile    
         datafile.close()
+        
+    # updates the information in game_lib.pickle with the current information in the program (games)
+    def save(self):
+        try:
+            datafile = open("game_lib.pickle", "wb")
+            pickle.dump(self.games, datafile)
+            datafile.close()
+            
+        except:
+            
+            raise Exception("Data failed to save")
         
 class MainMenu(tk.Frame):
     def __init__(self):
@@ -63,6 +74,6 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
     main_menu = MainMenu()
-    main_menu.grid(row = 0, column = 0)
+    #main_menu.grid(row = 0, column = 0)
     
     root.mainloop()
