@@ -46,23 +46,54 @@ class Library(object):
 class MainMenu(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
-        self.lbl_title = tk.Label(text= "Game Library", font = TITLE_FONT)
+        self.lbl_title = tk.Label(self, text= "Game Library", font = TITLE_FONT)
         self.lbl_title.grid(row = 0, column = 0, sticky = "news")
         
-        self.btn_add = tk.Button(text = "Add", font = BUTTON_FONT)
+        self.btn_add = tk.Button(self, text = "Add", font = BUTTON_FONT)
         self.btn_add.grid(row = 1, column = 0)
         
-        self.btn_edit = tk.Button(text = "Edit", font = BUTTON_FONT)
+        self.btn_edit = tk.Button(self, text = "Edit", font = BUTTON_FONT)
         self.btn_edit.grid(row = 2, column = 0)
         
-        self.btn_search = tk.Button(text = "Search", font = BUTTON_FONT)
+        self.btn_search = tk.Button(self, text = "Search", font = BUTTON_FONT)
         self.btn_search.grid(row = 3, column = 0)
         
-        self.btn_remove = tk.Button(text = "Remove", font = BUTTON_FONT)
+        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT)
         self.btn_remove.grid(row = 4, column = 0)
         
-        self.btn_save = tk.Button(text = "Save", font = BUTTON_FONT)
+        self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
         self.btn_save.grid(row = 5, column = 0)        
+        
+        
+class Search(tk.Frame):
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.lbl_title = tk.Label(self, text="Search")
+        self.lbl_title.grid(row=0, column=2, columnspan=2)
+        
+        self.lbl_search_by = tk.Label(self, text="Search By:")
+        self.lbl_search_by.grid(row=1, column=0, columnspan=3)
+        
+        self.lbl_search_for = tk.Label(self, text="Search For:")
+        self.lbl_search_for.grid(row=3, column=0, columnspan=3)
+        
+        self.drp_search_by = tk.Entry(self)
+        self.drp_search_by.grid(row=2, column=0, columnspan=3)
+        
+        self.ent_search_for = tk.Entry(self)
+        self.ent_search_for.grid(row=4, column=0, columnspan=3)
+        
+        self.scrolled_text = ScrolledText(self, height=8, width=40)
+        self.scrolled_text.grid(row=5, column=0, columnspan=6)
+            
+        self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back")
+        self.btn_back.grid(row=6, column=0, columnspan=2)
+        
+        self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear")
+        self.btn_clear.grid(row=6, column=2, columnspan=2)
+        
+        self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
+        self.btn_clear.grid(row=6, column=4, columnspan=2)        
         
 # Functions/global functions
 
@@ -74,6 +105,10 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
     main_menu = MainMenu()
-    #main_menu.grid(row = 0, column = 0)
+    main_menu.grid(row = 0, column = 0, sticky = 'news')
     
+    search_menu = Search()
+    search_menu.grid(row = 0, column = 0, sticky = 'news')
+    
+    search_menu.tkraise()
     root.mainloop()
