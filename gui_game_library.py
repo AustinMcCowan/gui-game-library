@@ -128,7 +128,7 @@ class Search(tk.Frame):
         self.tkvar_search.set(category_list[0])
         
         self.drp_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
-        self.drp_search_by.grid(row=2, column=0, columnspan=3)
+        self.drp_search_by.grid(row=2, column=0, columnspan=3, sticky='news')
         
         self.ent_search_for = tk.Entry(self)
         self.ent_search_for.grid(row=4, column=0, columnspan=3)
@@ -162,8 +162,8 @@ class Edit(tk.Frame):
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
-        self.drp_titles = tk.Entry(self)
-        self.drp_titles.grid(row=1, column=0, columnspan=2)
+        self.drp_titles_to_edit = tk.Entry(self)
+        self.drp_titles_to_edit.grid(row=1, column=0, columnspan=2)
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
         self.btn_cancel.grid(row=2, column=0)
@@ -177,8 +177,12 @@ class Remove(tk.Frame):
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
-        self.drp_titles = tk.Entry(self)
-        self.drp_titles.grid(row=1, column=0, columnspan=2)
+        titles = ["placeholder I", "placeholder II"]
+        self.tkvar_remove = tk.StringVar(self)
+        self.tkvar_remove.set(titles[0])
+        
+        self.drp_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *titles)
+        self.drp_titles_to_remove.grid(row=1, column=0, columnspan=2)
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
         self.btn_cancel.grid(row=2, column=0)
@@ -316,5 +320,5 @@ if __name__ == "__main__":
     editor_menu.grid(row=0, column=0, sticky='news')
     
     root.grid_columnconfigure(0, weight=1)
-    editor_menu.tkraise()
+    search_menu.tkraise()
     root.mainloop()
