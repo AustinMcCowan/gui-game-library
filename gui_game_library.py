@@ -64,6 +64,10 @@ class MainMenu(tk.Frame):
         self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
         self.btn_save.grid(row = 5, column = 1)        
         
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+        
 class SearchFilters(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
@@ -119,7 +123,11 @@ class Search(tk.Frame):
         self.lbl_search_for = tk.Label(self, text="Search For:")
         self.lbl_search_for.grid(row=3, column=0, columnspan=3)
         
-        self.drp_search_by = tk.Entry(self)
+        category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
+        self.tkvar_search = tk.StringVar(self)
+        self.tkvar_search.set(category_list[0])
+        
+        self.drp_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
         self.drp_search_by.grid(row=2, column=0, columnspan=3)
         
         self.ent_search_for = tk.Entry(self)
@@ -138,8 +146,16 @@ class Search(tk.Frame):
         self.btn_clear.grid(row=6, column=2, columnspan=2)
         
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
-        self.btn_clear.grid(row=6, column=4, columnspan=2)        
+        self.btn_clear.grid(row=6, column=4, columnspan=2)
         
+        '''
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+        self.grid_columnconfigure(3, weight=1)
+        self.grid_columnconfigure(4, weight=1)
+        self.grid_columnconfigure(5, weight=1)
+        '''
 class Edit(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
@@ -174,14 +190,104 @@ class Save_Message(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         self.lbl_saved = tk.Label(self, text="File saved", font=TITLE_FONT)
+        self.lbl_saved.grid(row=0,column=0, sticky='news')
+        
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
+        self.btn_okay.grid(row=0, column=0)
     
 class Editor(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         
+        self.lbl_genre = tk.Label(self, text="Genre")
+        self.lbl_genre.grid(row=0, column=0)
+        
+        self.ent_genre = tk.Entry(self)
+        self.ent_genre.grid(row=0, column=1, columnspan=2, sticky='news')
+        
+        self.lbl_title = tk.Label(self, text="Title")
+        self.lbl_title.grid(row=0, column=3)
+        
+        self.ent_title = tk.Entry(self)
+        self.ent_title.grid(row=0, column=4, columnspan=2, sticky='news')
+        
+        self.lbl_developer = tk.Label(self, text="Developer")
+        self.lbl_developer.grid(row=1, column=0)
+        
+        self.ent_developer = tk.Entry(self)
+        self.ent_developer.grid(row=1, column=1, columnspan=2, sticky='news')
+        
+        self.lbl_publisher = tk.Label(self, text="Publisher")
+        self.lbl_publisher.grid(row=1, column=3)
+        
+        self.ent_publisher = tk.Entry(self)
+        self.ent_publisher.grid(row=1, column=4, columnspan=2, sticky='news')
+        
+        self.lbl_system = tk.Label(self, text="System")
+        self.lbl_system.grid(row=2, column=0)
+        
+        self.ent_system = tk.Entry(self)
+        self.ent_system.grid(row=2, column=1, columnspan=2, sticky='news')
+        
+        self.lbl_release = tk.Label(self, text="Release")
+        self.lbl_release.grid(row=2, column=3)
+        
+        self.ent_release = tk.Entry(self)
+        self.ent_release.grid(row=2, column=4, columnspan=2, sticky='news')
+        
+        self.lbl_rating = tk.Label(self, text="Rating")
+        self.lbl_rating.grid(row=3, column=0)
+        
+        self.ent_rating = tk.Entry(self)
+        self.ent_rating.grid(row=3, column=1, columnspan=2, sticky='news')
+        
+        self.lbl_mode = tk.Label(self, text="Game mode")
+        self.lbl_mode.grid(row=3, column=3)
+        
+        mode_options = ["Single", "Multi", "Either"]
+        self.tkvar_mode = tk.StringVar(self)
+        self.tkvar_mode.set(mode_options[0])
+        
+        self.drp_mode = tk.OptionMenu(self, self.tkvar_mode, *mode_options)
+        self.drp_mode.grid(row=3, column=4, columnspan=2, sticky='news')
+        
+        self.lbl_price = tk.Label(self, text="Price")
+        self.lbl_price.grid(row=4, column=0)
+        
+        self.ent_price = tk.Entry(self)
+        self.ent_price.grid(row=4, column=1, columnspan=2, sticky='news')
+        
+        self.chk_beat = tk.Checkbutton(self, text="Beat it?")
+        self.chk_beat.grid(row=4, column=3, columnspan=3, sticky='news')
+        
+        self.lbl_purchase = tk.Label(self, text="Purchase")
+        self.lbl_purchase.grid(row=5, column=0)
+        
+        self.ent_purchase = tk.Entry(self)
+        self.ent_purchase.grid(row=5, column=1, columnspan=2, sticky='news')
+        
+        self.lbl_notes = tk.Label(self, text="Notes:")
+        self.lbl_notes.grid(row=6, column=0)
+        
+        self.scrolled_text_notes = ScrolledText(self, height=8, width=40)
+        self.scrolled_text_notes.grid(row=7, column=0, columnspan=6, sticky='news')
+        
+        self.btn_cancel = tk.Button(self, text="Cancel")
+        self.btn_cancel.grid(row=8, column=0, columnspan=2)
+        
+        self.btn_clear = tk.Button(self, text="Clear")
+        self.btn_clear.grid(row=8, column=2, columnspan=2)
+        
+        self.btn_submit = tk.Button(self, text="Submit")
+        self.btn_submit.grid(row=8, column=4, columnspan=2)
         
         
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+        self.grid_columnconfigure(3, weight=1)
+        self.grid_columnconfigure(4, weight=1)
+        self.grid_columnconfigure(5, weight=1)        
 # Functions/global functions
 
 
@@ -203,6 +309,12 @@ if __name__ == "__main__":
     remove_menu = Remove()
     remove_menu.grid(row=0, column=0, sticky='news')
     
+    save_menu = Save_Message()
+    save_menu.grid(row=0, column=0, sticky='news')
+    
+    editor_menu = Editor()
+    editor_menu.grid(row=0, column=0, sticky='news')
+    
     root.grid_columnconfigure(0, weight=1)
-    search_menu.tkraise()
+    editor_menu.tkraise()
     root.mainloop()
