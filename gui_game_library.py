@@ -50,19 +50,19 @@ class MainMenu(tk.Frame):
         self.lbl_title.grid(row = 0, column = 0, columnspan=3, sticky = "news")
         
         self.btn_add = tk.Button(self, text = "Add", font = BUTTON_FONT)
-        self.btn_add.grid(row = 1, column = 1)
+        self.btn_add.grid(row = 1, column = 1, sticky='news')
         
         self.btn_edit = tk.Button(self, text = "Edit", font = BUTTON_FONT)
-        self.btn_edit.grid(row = 2, column = 1)
+        self.btn_edit.grid(row = 2, column = 1, sticky='news')
         
         self.btn_search = tk.Button(self, text = "Search", font = BUTTON_FONT)
-        self.btn_search.grid(row = 3, column = 1)
+        self.btn_search.grid(row = 3, column = 1, sticky='news')
         
         self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT)
-        self.btn_remove.grid(row = 4, column = 1)
+        self.btn_remove.grid(row = 4, column = 1, sticky='news')
         
         self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
-        self.btn_save.grid(row = 5, column = 1)        
+        self.btn_save.grid(row = 5, column = 1, sticky='news')        
         
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
