@@ -286,13 +286,13 @@ class Editor(tk.Frame):
         self.scr_notes.grid(row=7, column=0, columnspan=6, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel")
-        self.btn_cancel.grid(row=8, column=0, columnspan=2)
+        self.btn_cancel.grid(row=8, column=0, columnspan=2, sticky='news')
         
         self.btn_clear = tk.Button(self, text="Clear")
-        self.btn_clear.grid(row=8, column=2, columnspan=2)
+        self.btn_clear.grid(row=8, column=2, columnspan=2, sticky='news')
         
         self.btn_submit = tk.Button(self, text="Submit")
-        self.btn_submit.grid(row=8, column=4, columnspan=2)
+        self.btn_submit.grid(row=8, column=4, columnspan=2, sticky='news')
         
         
         self.grid_columnconfigure(0, weight=1)
@@ -330,5 +330,5 @@ if __name__ == "__main__":
     editor_menu.grid(row=0, column=0, sticky='news')
     
     root.grid_columnconfigure(0, weight=1)
-    search_menu.tkraise()
+    editor_menu.tkraise()
     root.mainloop()
