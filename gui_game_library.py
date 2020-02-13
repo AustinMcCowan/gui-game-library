@@ -127,17 +127,17 @@ class Search(tk.Frame):
         self.tkvar_search = tk.StringVar(self)
         self.tkvar_search.set(category_list[0])
         
-        self.drp_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
-        self.drp_search_by.grid(row=2, column=0, columnspan=3, sticky='news')
+        self.dbx_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
+        self.dbx_search_by.grid(row=2, column=0, columnspan=3)
         
         self.ent_search_for = tk.Entry(self)
         self.ent_search_for.grid(row=4, column=0, columnspan=3)
         
-        self.search_filters = SearchFilters(self)
-        self.search_filters.grid(row=1, column=3, rowspan=4, columnspan=3)
+        self.frm_search_filters = SearchFilters(self)
+        self.frm_search_filters.grid(row=1, column=3, rowspan=4, columnspan=3)
         
-        self.scrolled_text = ScrolledText(self, height=8, width=40)
-        self.scrolled_text.grid(row=5, column=0, columnspan=6)
+        self.scr_text = ScrolledText(self, height=8, width=40)
+        self.scr_text.grid(row=5, column=0, columnspan=6)
             
         self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back")
         self.btn_back.grid(row=6, column=0, columnspan=2)
@@ -148,28 +148,34 @@ class Search(tk.Frame):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
         self.btn_clear.grid(row=6, column=4, columnspan=2)
         
-        '''
+        
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
         self.grid_columnconfigure(3, weight=1)
         self.grid_columnconfigure(4, weight=1)
         self.grid_columnconfigure(5, weight=1)
-        '''
+        
 class Edit(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
-        self.drp_titles_to_edit = tk.Entry(self)
-        self.drp_titles_to_edit.grid(row=1, column=0, columnspan=2)
+        titles_to_edit = ["placeholder I", "placeholder II"]
+        self.tkvar_titles_to_edit = tk.StringVar(self)
+        self.tkvar_titles_to_edit.set(titles_to_edit[0])
+        
+        self.dbx_titles_to_edit = tk.OptionMenu(self, self.tkvar_titles_to_edit, *titles_to_edit)
+        self.dbx_titles_to_edit.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
         self.btn_cancel.grid(row=2, column=0)
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
         self.btn_okay.grid(row=2, column=1)
+        
+        
 
 class Remove(tk.Frame):
     def __init__(self):
@@ -181,16 +187,19 @@ class Remove(tk.Frame):
         self.tkvar_remove = tk.StringVar(self)
         self.tkvar_remove.set(titles[0])
         
-        self.drp_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *titles)
-        self.drp_titles_to_remove.grid(row=1, column=0, columnspan=2)
+        self.dbx_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *titles)
+        self.dbx_titles_to_remove.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
         self.btn_cancel.grid(row=2, column=0)
         
         self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT)
         self.btn_remove.grid(row=2, column=1)
+        
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
-class Save_Message(tk.Frame):
+class SaveMessage(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         self.lbl_saved = tk.Label(self, text="File saved", font=TITLE_FONT)
@@ -252,8 +261,8 @@ class Editor(tk.Frame):
         self.tkvar_mode = tk.StringVar(self)
         self.tkvar_mode.set(mode_options[0])
         
-        self.drp_mode = tk.OptionMenu(self, self.tkvar_mode, *mode_options)
-        self.drp_mode.grid(row=3, column=4, columnspan=2, sticky='news')
+        self.dbx_mode = tk.OptionMenu(self, self.tkvar_mode, *mode_options)
+        self.dbx_mode.grid(row=3, column=4, columnspan=2, sticky='news')
         
         self.lbl_price = tk.Label(self, text="Price")
         self.lbl_price.grid(row=4, column=0)
@@ -273,8 +282,8 @@ class Editor(tk.Frame):
         self.lbl_notes = tk.Label(self, text="Notes:")
         self.lbl_notes.grid(row=6, column=0)
         
-        self.scrolled_text_notes = ScrolledText(self, height=8, width=40)
-        self.scrolled_text_notes.grid(row=7, column=0, columnspan=6, sticky='news')
+        self.scr_notes = ScrolledText(self, height=8, width=40)
+        self.scr_notes.grid(row=7, column=0, columnspan=6, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel")
         self.btn_cancel.grid(row=8, column=0, columnspan=2)
@@ -291,7 +300,8 @@ class Editor(tk.Frame):
         self.grid_columnconfigure(2, weight=1)
         self.grid_columnconfigure(3, weight=1)
         self.grid_columnconfigure(4, weight=1)
-        self.grid_columnconfigure(5, weight=1)        
+        self.grid_columnconfigure(5, weight=1)  
+        
 # Functions/global functions
 
 
@@ -313,12 +323,12 @@ if __name__ == "__main__":
     remove_menu = Remove()
     remove_menu.grid(row=0, column=0, sticky='news')
     
-    save_menu = Save_Message()
+    save_menu = SaveMessage()
     save_menu.grid(row=0, column=0, sticky='news')
     
     editor_menu = Editor()
     editor_menu.grid(row=0, column=0, sticky='news')
     
     root.grid_columnconfigure(0, weight=1)
-    search_menu.tkraise()
+    editor_menu.tkraise()
     root.mainloop()
