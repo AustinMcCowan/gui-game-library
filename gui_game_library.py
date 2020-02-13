@@ -115,23 +115,23 @@ class Search(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         self.lbl_title = tk.Label(self, text="Search")
-        self.lbl_title.grid(row=0, column=2, columnspan=2)
+        self.lbl_title.grid(row=0, column=0, columnspan=6)
         
         self.lbl_search_by = tk.Label(self, text="Search By:")
-        self.lbl_search_by.grid(row=1, column=0, columnspan=3)
+        self.lbl_search_by.grid(row=1, column=0, columnspan=3, sticky='news')
         
         self.lbl_search_for = tk.Label(self, text="Search For:")
-        self.lbl_search_for.grid(row=3, column=0, columnspan=3)
+        self.lbl_search_for.grid(row=3, column=0, columnspan=3, sticky='news')
         
         category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         self.tkvar_search = tk.StringVar(self)
         self.tkvar_search.set(category_list[0])
         
         self.dbx_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
-        self.dbx_search_by.grid(row=2, column=0, columnspan=3)
+        self.dbx_search_by.grid(row=2, column=0, columnspan=3, sticky='news')
         
         self.ent_search_for = tk.Entry(self)
-        self.ent_search_for.grid(row=4, column=0, columnspan=3)
+        self.ent_search_for.grid(row=4, column=0, columnspan=3, sticky='news')
         
         self.frm_search_filters = SearchFilters(self)
         self.frm_search_filters.grid(row=1, column=3, rowspan=4, columnspan=3)
@@ -140,13 +140,13 @@ class Search(tk.Frame):
         self.scr_text.grid(row=5, column=0, columnspan=6)
             
         self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back")
-        self.btn_back.grid(row=6, column=0, columnspan=2)
+        self.btn_back.grid(row=6, column=0, columnspan=2, sticky='news')
         
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear")
-        self.btn_clear.grid(row=6, column=2, columnspan=2)
+        self.btn_clear.grid(row=6, column=2, columnspan=2, sticky='news')
         
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
-        self.btn_clear.grid(row=6, column=4, columnspan=2)
+        self.btn_clear.grid(row=6, column=4, columnspan=2, sticky='news')
         
         
         self.grid_columnconfigure(0, weight=1)
@@ -330,5 +330,5 @@ if __name__ == "__main__":
     editor_menu.grid(row=0, column=0, sticky='news')
     
     root.grid_columnconfigure(0, weight=1)
-    editor_menu.tkraise()
+    search_menu.tkraise()
     root.mainloop()
