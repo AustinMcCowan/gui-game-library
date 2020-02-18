@@ -43,9 +43,17 @@ class Library(object):
             
             raise Exception("Data failed to save")
         
-class MainMenu(tk.Frame):
+        
+class Screen(tk.Frame):
+    current = 0
+    
     def __init__(self):
         tk.Frame.__init__(self)
+        
+        
+class MainMenu(Screen):
+    def __init__(self):
+        Screen.__init__(self)
         self.lbl_title = tk.Label(self, text= "Game Library", font = TITLE_FONT)
         self.lbl_title.grid(row = 0, column = 0, columnspan=3, sticky = "news")
         
@@ -111,9 +119,9 @@ class SearchFilters(tk.Frame):
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
                
-class Search(tk.Frame):
+class Search(Screen):
     def __init__(self):
-        tk.Frame.__init__(self)
+        Screen.__init__(self)
         self.lbl_title = tk.Label(self, text="Search")
         self.lbl_title.grid(row=0, column=0, columnspan=6)
         
@@ -156,9 +164,9 @@ class Search(tk.Frame):
         self.grid_columnconfigure(4, weight=1)
         self.grid_columnconfigure(5, weight=1)
         
-class Edit(tk.Frame):
+class Edit(Screen):
     def __init__(self):
-        tk.Frame.__init__(self)
+        Screen.__init__(self)
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
@@ -177,9 +185,9 @@ class Edit(tk.Frame):
         
         
 
-class Remove(tk.Frame):
+class Remove(Screen):
     def __init__(self):
-        tk.Frame.__init__(self)
+        Screen.__init__(self)
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
@@ -199,18 +207,18 @@ class Remove(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
-class SaveMessage(tk.Frame):
+class SaveMessage(Screen):
     def __init__(self):
-        tk.Frame.__init__(self)
+        Screen.__init__(self)
         self.lbl_saved = tk.Label(self, text="File saved", font=TITLE_FONT)
         self.lbl_saved.grid(row=0,column=0, sticky='news')
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
-        self.btn_okay.grid(row=0, column=0)
+        self.btn_okay.grid(row=1, column=0)
     
-class Editor(tk.Frame):
+class Editor(Screen):
     def __init__(self):
-        tk.Frame.__init__(self)
+        Screen.__init__(self)
         
         self.lbl_genre = tk.Label(self, text="Genre")
         self.lbl_genre.grid(row=0, column=0)
@@ -330,5 +338,5 @@ if __name__ == "__main__":
     editor_menu.grid(row=0, column=0, sticky='news')
     
     root.grid_columnconfigure(0, weight=1)
-    editor_menu.tkraise()
+    save_menu.tkraise()
     root.mainloop()
