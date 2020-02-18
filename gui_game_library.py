@@ -319,24 +319,12 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Game Library")
     root.geometry("500x500")
-    main_menu = MainMenu()
-    main_menu.grid(row=0, column=0, sticky ='news')
     
-    search_menu = Search()
-    search_menu.grid(row=0, column=0, sticky='news')
+    screens = [MainMenu(), Search(), Edit(), Remove(), SaveMessage(), Editor()]
     
-    edit_menu = Edit()
-    edit_menu.grid(row=0, column=0, sticky='news')
-    
-    remove_menu = Remove()
-    remove_menu.grid(row=0, column=0, sticky='news')
-    
-    save_menu = SaveMessage()
-    save_menu.grid(row=0, column=0, sticky='news')
-    
-    editor_menu = Editor()
-    editor_menu.grid(row=0, column=0, sticky='news')
-    
+    for i in range(len(screens)):
+        screens[i].grid(row=0, column=0, sticky='news')
+        
     root.grid_columnconfigure(0, weight=1)
-    save_menu.tkraise()
+    screens[0].tkraise()
     root.mainloop()
