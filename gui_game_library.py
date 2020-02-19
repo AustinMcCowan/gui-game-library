@@ -41,6 +41,7 @@ class Library(object):
             
         except:
             
+            # If file fails to load, raise error
             raise Exception("Data failed to save")
         
         
@@ -50,35 +51,64 @@ class Screen(tk.Frame):
     def __init__(self):
         tk.Frame.__init__(self)
         
+    def switch_frame():
+        screens[Screen.current].tkraise()
         
 class MainMenu(Screen):
     def __init__(self):
         Screen.__init__(self)
+        
+        # Title
         self.lbl_title = tk.Label(self, text= "Game Library", font = TITLE_FONT)
         self.lbl_title.grid(row = 0, column = 0, columnspan=3, sticky = "news")
         
-        self.btn_add = tk.Button(self, text = "Add", font = BUTTON_FONT)
+        # Add button
+        self.btn_add = tk.Button(self, text = "Add", font = BUTTON_FONT, command = self.go_add)
         self.btn_add.grid(row = 1, column = 1, sticky='news')
         
-        self.btn_edit = tk.Button(self, text = "Edit", font = BUTTON_FONT)
+        # Edit Button
+        self.btn_edit = tk.Button(self, text = "Edit", font = BUTTON_FONT, command = self.go_edit)
         self.btn_edit.grid(row = 2, column = 1, sticky='news')
         
-        self.btn_search = tk.Button(self, text = "Search", font = BUTTON_FONT)
+        # Search Button
+        self.btn_search = tk.Button(self, text = "Search", font = BUTTON_FONT, command = self.go_search)
         self.btn_search.grid(row = 3, column = 1, sticky='news')
         
-        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT)
+        # Remove Button
+        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT, command = self.go_remove)
         self.btn_remove.grid(row = 4, column = 1, sticky='news')
         
+        # Save Button
         self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
-        self.btn_save.grid(row = 5, column = 1, sticky='news')        
+        self.btn_save.grid(row = 5, column = 1, sticky='news')                
         
+        # Grid column configures    
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
         
+    # Screen transition functions
+    def go_add(self):
+        Screen.current = 5
+        Screen.switch_frame()
+    
+    def go_edit(self):     
+        Screen.current = 2
+        Screen.switch_frame()
+        
+    def go_search(self):     
+        Screen.current = 1
+        Screen.switch_frame()
+    
+    def go_remove(self):     
+        Screen.current = 3
+        Screen.switch_frame()
+                
 class SearchFilters(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
+        
+        # Widgets, check buttons
         self.lbl_print_filers = tk.Label(self, text="Print Filters")
         self.lbl_print_filers.grid(row=0, column=0, columnspan=3)
         
@@ -115,6 +145,7 @@ class SearchFilters(tk.Frame):
         self.chk_purchase = tk.Checkbutton(self, text="Purchase Date")
         self.chk_purchase.grid(row=3, column=2)     
         
+        # grid column configures
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
@@ -122,6 +153,8 @@ class SearchFilters(tk.Frame):
 class Search(Screen):
     def __init__(self):
         Screen.__init__(self)
+        
+        # Widgets
         self.lbl_title = tk.Label(self, text="Search")
         self.lbl_title.grid(row=0, column=0, columnspan=6)
         
@@ -131,6 +164,7 @@ class Search(Screen):
         self.lbl_search_for = tk.Label(self, text="Search For:")
         self.lbl_search_for.grid(row=3, column=0, columnspan=3, sticky='news')
         
+        # Drop down menu
         category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         self.tkvar_search = tk.StringVar(self)
         self.tkvar_search.set(category_list[0])
@@ -138,6 +172,7 @@ class Search(Screen):
         self.dbx_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
         self.dbx_search_by.grid(row=2, column=0, columnspan=3, sticky='news')
         
+        # More widgets
         self.ent_search_for = tk.Entry(self)
         self.ent_search_for.grid(row=4, column=0, columnspan=3, sticky='news')
         
@@ -147,7 +182,7 @@ class Search(Screen):
         self.scr_text = ScrolledText(self, height=8, width=40)
         self.scr_text.grid(row=5, column=0, columnspan=6)
             
-        self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back")
+        self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back", command = self.go_mainmenu)
         self.btn_back.grid(row=6, column=0, columnspan=2, sticky='news')
         
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear")
@@ -156,13 +191,18 @@ class Search(Screen):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
         self.btn_clear.grid(row=6, column=4, columnspan=2, sticky='news')
         
-        
+        # Grid column configure
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
         self.grid_columnconfigure(3, weight=1)
         self.grid_columnconfigure(4, weight=1)
         self.grid_columnconfigure(5, weight=1)
+    
+    # Functions    
+    def go_mainmenu(self):
+        Screen.current = 0
+        Screen.switch_frame()   
         
 class Edit(Screen):
     def __init__(self):
@@ -177,13 +217,15 @@ class Edit(Screen):
         self.dbx_titles_to_edit = tk.OptionMenu(self, self.tkvar_titles_to_edit, *titles_to_edit)
         self.dbx_titles_to_edit.grid(row=1, column=0, columnspan=2, sticky='news')
         
-        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
+        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command = self.go_mainmenu)
         self.btn_cancel.grid(row=2, column=0)
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
         self.btn_okay.grid(row=2, column=1)
         
-        
+    def go_mainmenu(self):
+        Screen.current = 0
+        Screen.switch_frame()    
 
 class Remove(Screen):
     def __init__(self):
@@ -198,7 +240,7 @@ class Remove(Screen):
         self.dbx_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *titles)
         self.dbx_titles_to_remove.grid(row=1, column=0, columnspan=2, sticky='news')
         
-        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT)
+        self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command=self.go_mainmenu)
         self.btn_cancel.grid(row=2, column=0)
         
         self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT)
@@ -206,6 +248,10 @@ class Remove(Screen):
         
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+    
+    def go_mainmenu(self):
+        Screen.current = 0
+        Screen.switch_frame()    
 
 class SaveMessage(Screen):
     def __init__(self):
@@ -293,7 +339,7 @@ class Editor(Screen):
         self.scr_notes = ScrolledText(self, height=8, width=40)
         self.scr_notes.grid(row=7, column=0, columnspan=6, sticky='news')
         
-        self.btn_cancel = tk.Button(self, text="Cancel")
+        self.btn_cancel = tk.Button(self, text="Cancel", command=self.go_mainmenu)
         self.btn_cancel.grid(row=8, column=0, columnspan=2, sticky='news')
         
         self.btn_clear = tk.Button(self, text="Clear")
@@ -308,7 +354,11 @@ class Editor(Screen):
         self.grid_columnconfigure(2, weight=1)
         self.grid_columnconfigure(3, weight=1)
         self.grid_columnconfigure(4, weight=1)
-        self.grid_columnconfigure(5, weight=1)  
+        self.grid_columnconfigure(5, weight=1)
+    
+    def go_mainmenu(self):
+        Screen.current = 0
+        Screen.switch_frame()    
         
 # Functions/global functions
 
@@ -319,7 +369,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Game Library")
     root.geometry("500x500")
-    
+
     screens = [MainMenu(), Search(), Edit(), Remove(), SaveMessage(), Editor()]
     
     for i in range(len(screens)):
