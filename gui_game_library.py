@@ -89,19 +89,25 @@ class MainMenu(Screen):
         
     # Screen transition functions
     def go_add(self):
-        Screen.current = 5
+        Screen.current = 4
         Screen.switch_frame()
     
-    def go_edit(self):     
+    def go_edit(self):
+        pop_up = tk.Tk()
+        pop_up.title("Edit")
+        frm_edit_list = Edit(pop_up)
+        frm_edit_list.grid(row=0, column=0)
+        
+        '''
         Screen.current = 2
         Screen.switch_frame()
-        
+        '''
     def go_search(self):     
         Screen.current = 1
         Screen.switch_frame()
     
     def go_remove(self):     
-        Screen.current = 3
+        Screen.current = 2
         Screen.switch_frame()
                 
 class SearchFilters(tk.Frame):
@@ -204,9 +210,9 @@ class Search(Screen):
         Screen.current = 0
         Screen.switch_frame()   
         
-class Edit(Screen):
-    def __init__(self):
-        Screen.__init__(self)
+class Edit(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, master=parent)
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
@@ -370,10 +376,15 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
 
-    screens = [MainMenu(), Search(), Edit(), Remove(), SaveMessage(), Editor()]
     
-    for i in range(len(screens)):
-        screens[i].grid(row=0, column=0, sticky='news')
+    screens = [MainMenu(), Search(), Remove(), SaveMessage(), Editor()]
+    
+    screens[0].grid(row=0, column=0, sticky='news')
+    screens[1].grid(row=0, column=0, sticky='news')
+    #screens[2].grid(row=0, column=0, sticky='news')
+    screens[2].grid(row=0, column=0, sticky='news')
+    screens[3].grid(row=0, column=0, sticky='news')
+    screens[4].grid(row=0, column=0, sticky='news')
         
     root.grid_columnconfigure(0, weight=1)
     screens[0].tkraise()
