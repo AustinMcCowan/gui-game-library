@@ -95,7 +95,7 @@ class MainMenu(Screen):
     def go_edit(self):
         pop_up = tk.Tk()
         pop_up.title("Edit")
-        frm_edit_list = Edit(pop_up)
+        frm_edit_list = EditSelect(pop_up)
         frm_edit_list.grid(row=0, column=0)
         
         '''
@@ -105,7 +105,13 @@ class MainMenu(Screen):
     def go_search(self):     
         Screen.current = 1
         Screen.switch_frame()
-        
+    
+    def go_remove(self):
+        pass
+    
+    def go_save(self):
+        pass
+    
 class SearchFilters(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
@@ -182,7 +188,7 @@ class Search(Screen):
         self.frm_search_filters.grid(row=1, column=3, rowspan=4, columnspan=3)
         
         self.scr_text = ScrolledText(self, height=8, width=40)
-        self.scr_text.grid(row=5, column=0, columnspan=6)
+        self.scr_text.grid(row=5, column=0, columnspan=6, sticky='news')
             
         self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back", command = self.go_mainmenu)
         self.btn_back.grid(row=6, column=0, columnspan=2, sticky='news')
@@ -206,9 +212,10 @@ class Search(Screen):
         Screen.current = 0
         Screen.switch_frame()   
         
-class Edit(tk.Frame):
+class EditSelect(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
+        
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
@@ -233,9 +240,10 @@ class Edit(tk.Frame):
         Screen.current = 2
         Screen.switch_frame()
 
-class Remove(Screen):
-    def __init__(self):
-        Screen.__init__(self)
+class Remove(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, master=parent)
+        
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
@@ -258,16 +266,17 @@ class Remove(Screen):
     def go_mainmenu(self):
         Screen.current = 0
         Screen.switch_frame()    
-
+'''
 class SaveMessage(Screen):
     def __init__(self):
         Screen.__init__(self)
+        
         self.lbl_saved = tk.Label(self, text="File saved", font=TITLE_FONT)
         self.lbl_saved.grid(row=0,column=0, sticky='news')
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
         self.btn_okay.grid(row=1, column=0)
-    
+'''    
 class Editor(Screen):
     def __init__(self):
         Screen.__init__(self)
