@@ -75,7 +75,7 @@ class MainMenu(Screen):
         self.btn_search.grid(row = 3, column = 1, sticky='news')
         
         # Remove Button
-        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT)
+        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT, command = self.go_remove)
         self.btn_remove.grid(row = 4, column = 1, sticky='news')
         
         # Save Button
@@ -87,27 +87,31 @@ class MainMenu(Screen):
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
         
-    # Screen transition functions
+    # --Screen transition functions--
+    # Action to go to the add menu``
     def go_add(self):
         Screen.current = 2
         Screen.switch_frame()
     
+    # Action to open the edit pop up
     def go_edit(self):
         pop_up = tk.Tk()
         pop_up.title("Edit")
-        frm_edit_list = EditSelect(pop_up)
-        frm_edit_list.grid(row=0, column=0)
         
-        '''
-        Screen.current = 2
-        Screen.switch_frame()
-        '''
+        frm_edit = EditSelect(pop_up)
+        frm_edit.grid(row=0, column=0)
+    
+    # Action to go to search menu    
     def go_search(self):     
         Screen.current = 1
         Screen.switch_frame()
     
     def go_remove(self):
-        pass
+        pop_up_remove = tk.Tk()
+        pop_up_remove.title("Remove")
+        
+        frm_remove = Remove(pop_up_remove)
+        frm_remove.grid(row=0, column=0)
     
     def go_save(self):
         pass
@@ -215,6 +219,7 @@ class Search(Screen):
 class EditSelect(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
+        self.parent = parent
         
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
@@ -231,14 +236,20 @@ class EditSelect(tk.Frame):
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT, command = self.go_editor)
         self.btn_okay.grid(row=2, column=1)
-        
+    
+    # For the cancel button    
     def go_mainmenu(self):
         Screen.current = 0
         Screen.switch_frame()
+        
+        self.parent.destroy()
     
+    # For the okay button
     def go_editor(self):
         Screen.current = 2
         Screen.switch_frame()
+        
+        self.parent.destroy()
 
 class Remove(tk.Frame):
     def __init__(self, parent):
@@ -266,17 +277,7 @@ class Remove(tk.Frame):
     def go_mainmenu(self):
         Screen.current = 0
         Screen.switch_frame()    
-'''
-class SaveMessage(Screen):
-    def __init__(self):
-        Screen.__init__(self)
-        
-        self.lbl_saved = tk.Label(self, text="File saved", font=TITLE_FONT)
-        self.lbl_saved.grid(row=0,column=0, sticky='news')
-        
-        self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
-        self.btn_okay.grid(row=1, column=0)
-'''    
+    
 class Editor(Screen):
     def __init__(self):
         Screen.__init__(self)
