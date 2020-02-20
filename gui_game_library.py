@@ -254,6 +254,7 @@ class EditSelect(tk.Frame):
 class Remove(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
+        self.parent = parent
         
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
@@ -274,9 +275,18 @@ class Remove(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
     
+    # For the cancel button
     def go_mainmenu(self):
         Screen.current = 0
-        Screen.switch_frame()    
+        Screen.switch_frame()
+        
+        self.parent.destroy()
+        
+    def remove_game(self):
+        Screen.current = 0
+        Screen.switch_frame()
+        
+        self.parent.destroy()
     
 class Editor(Screen):
     def __init__(self):
