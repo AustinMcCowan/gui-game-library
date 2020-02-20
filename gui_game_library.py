@@ -88,12 +88,12 @@ class MainMenu(Screen):
         self.grid_columnconfigure(2, weight=1)
         
     # --Screen transition functions--
-    # Action to go to the add menu``
+    # to go to the add menu
     def go_add(self):
         Screen.current = 2
         Screen.switch_frame()
     
-    # Action to open the edit pop up
+    # to open the edit pop up
     def go_edit(self):
         pop_up = tk.Tk()
         pop_up.title("Edit")
@@ -101,11 +101,12 @@ class MainMenu(Screen):
         frm_edit = EditSelect(pop_up)
         frm_edit.grid(row=0, column=0)
     
-    # Action to go to search menu    
+    # to go to search menu    
     def go_search(self):     
         Screen.current = 1
         Screen.switch_frame()
     
+    # to open up the remove popup
     def go_remove(self):
         pop_up_remove = tk.Tk()
         pop_up_remove.title("Remove")
@@ -113,6 +114,7 @@ class MainMenu(Screen):
         frm_remove = Remove(pop_up_remove)
         frm_remove.grid(row=0, column=0)
     
+    # To save edits made to the library
     def go_save(self):
         pass
     
