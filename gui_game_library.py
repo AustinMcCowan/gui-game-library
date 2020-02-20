@@ -75,7 +75,7 @@ class MainMenu(Screen):
         self.btn_search.grid(row = 3, column = 1, sticky='news')
         
         # Remove Button
-        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT, command = self.go_remove)
+        self.btn_remove = tk.Button(self, text = "Remove", font = BUTTON_FONT)
         self.btn_remove.grid(row = 4, column = 1, sticky='news')
         
         # Save Button
@@ -89,7 +89,7 @@ class MainMenu(Screen):
         
     # Screen transition functions
     def go_add(self):
-        Screen.current = 4
+        Screen.current = 2
         Screen.switch_frame()
     
     def go_edit(self):
@@ -105,11 +105,7 @@ class MainMenu(Screen):
     def go_search(self):     
         Screen.current = 1
         Screen.switch_frame()
-    
-    def go_remove(self):     
-        Screen.current = 2
-        Screen.switch_frame()
-                
+        
 class SearchFilters(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
@@ -226,12 +222,16 @@ class Edit(tk.Frame):
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command = self.go_mainmenu)
         self.btn_cancel.grid(row=2, column=0)
         
-        self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT)
+        self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT, command = self.go_editor)
         self.btn_okay.grid(row=2, column=1)
         
     def go_mainmenu(self):
         Screen.current = 0
-        Screen.switch_frame()    
+        Screen.switch_frame()
+    
+    def go_editor(self):
+        Screen.current = 2
+        Screen.switch_frame()
 
 class Remove(Screen):
     def __init__(self):
@@ -376,15 +376,12 @@ if __name__ == "__main__":
     root.title("Game Library")
     root.geometry("500x500")
 
-    
-    screens = [MainMenu(), Search(), Remove(), SaveMessage(), Editor()]
+    # Editor() can be seen as Add()
+    screens = [MainMenu(), Search(), Editor()]
     
     screens[0].grid(row=0, column=0, sticky='news')
     screens[1].grid(row=0, column=0, sticky='news')
-    #screens[2].grid(row=0, column=0, sticky='news')
     screens[2].grid(row=0, column=0, sticky='news')
-    screens[3].grid(row=0, column=0, sticky='news')
-    screens[4].grid(row=0, column=0, sticky='news')
         
     root.grid_columnconfigure(0, weight=1)
     screens[0].tkraise()
