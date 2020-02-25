@@ -226,11 +226,14 @@ class EditSelect(tk.Frame):
         self.lbl_title = tk.Label(self, text="Which game would you like to edit?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
-        titles_to_edit = ["placeholder I", "placeholder II"]
+        self.titles_to_edit = ["select a title..."]
+        for key in content.games.keys():
+            self.titles_to_edit.append(content.games[key][1])
+            
         self.tkvar_titles_to_edit = tk.StringVar(self)
-        self.tkvar_titles_to_edit.set(titles_to_edit[0])
+        self.tkvar_titles_to_edit.set(self.titles_to_edit[0])
         
-        self.dbx_titles_to_edit = tk.OptionMenu(self, self.tkvar_titles_to_edit, *titles_to_edit)
+        self.dbx_titles_to_edit = tk.OptionMenu(self, self.tkvar_titles_to_edit, *self.titles_to_edit)
         self.dbx_titles_to_edit.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command = self.go_mainmenu)
@@ -247,11 +250,19 @@ class EditSelect(tk.Frame):
         self.parent.destroy()
     
     # For the okay button
-    def go_editor(self):
-        Screen.current = 2
-        Screen.switch_frame()
-        
-        self.parent.destroy()
+    def go_editor(self):        
+        if self.tkvar_titles_to_edit.get() == self.titles_to_edit[0]:
+            pass
+        else:
+            for i in range(len(self.titles_to_edit)):
+                if self.tkvar_titles_to_edit.get() == self.titles_to_edit[i]:
+                    screens[2].edit_key = i
+                    break
+                
+            Screen.current = 2
+            screens[2].load_to_edit()
+            Screen.switch_frame()            
+            self.parent.destroy()
 
 class Remove(tk.Frame):
     def __init__(self, parent):
@@ -261,11 +272,11 @@ class Remove(tk.Frame):
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
         
-        titles = ["placeholder I", "placeholder II"]
+        self.titles = ["placeholder I", "placeholder II"]
         self.tkvar_remove = tk.StringVar(self)
-        self.tkvar_remove.set(titles[0])
+        self.tkvar_remove.set(self.titles[0])
         
-        self.dbx_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *titles)
+        self.dbx_titles_to_remove = tk.OptionMenu(self, self.tkvar_remove, *self.titles)
         self.dbx_titles_to_remove.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command=self.go_mainmenu)
@@ -293,6 +304,7 @@ class Remove(tk.Frame):
 class Editor(Screen):
     def __init__(self):
         Screen.__init__(self)
+        self.edit_key = 0
         
         self.lbl_genre = tk.Label(self, text="Genre")
         self.lbl_genre.grid(row=0, column=0)
@@ -339,11 +351,11 @@ class Editor(Screen):
         self.lbl_mode = tk.Label(self, text="Game mode")
         self.lbl_mode.grid(row=3, column=3)
         
-        mode_options = ["Single", "Multi", "Either"]
+        self.mode_options = ["Single", "Multi", "Either"]
         self.tkvar_mode = tk.StringVar(self)
-        self.tkvar_mode.set(mode_options[0])
+        self.tkvar_mode.set(self.mode_options[0])
         
-        self.dbx_mode = tk.OptionMenu(self, self.tkvar_mode, *mode_options)
+        self.dbx_mode = tk.OptionMenu(self, self.tkvar_mode, *self.mode_options)
         self.dbx_mode.grid(row=3, column=4, columnspan=2, sticky='news')
         
         self.lbl_price = tk.Label(self, text="Price")
@@ -386,7 +398,13 @@ class Editor(Screen):
     
     def go_mainmenu(self):
         Screen.current = 0
-        Screen.switch_frame()    
+        Screen.switch_frame()
+    
+    def load_to_edit(self):
+        entry = content.games[self.edit_key]
+        self.ent_genre.delete(0, "end")
+        self.ent_genre.insert(0, entry[0])
+        
         
 # Functions/global functions
 
@@ -404,7 +422,7 @@ if __name__ == "__main__":
     screens[0].grid(row=0, column=0, sticky='news')
     screens[1].grid(row=0, column=0, sticky='news')
     screens[2].grid(row=0, column=0, sticky='news')
-        
+       
     root.grid_columnconfigure(0, weight=1)
     screens[0].tkraise()
     root.mainloop()
