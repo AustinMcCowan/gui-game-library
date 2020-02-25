@@ -401,11 +401,29 @@ class Editor(Screen):
         Screen.switch_frame()
     
     def load_to_edit(self):
+        # Just a list and index of each category
+        category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         entry = content.games[self.edit_key]
         self.ent_genre.delete(0, "end")
         self.ent_genre.insert(0, entry[0])
         
+        self.ent_title.delete(0, "end")
+        self.ent_title.insert(0, entry[1])
         
+        self.ent_developer.delete(0, "end")
+        self.ent_developer.insert(0, entry[2])
+        
+        self.ent_publisher.delete(0, "end")
+        self.ent_publisher.insert(0, entry[3])
+        
+        self.ent_system.delete(0, "end")
+        self.ent_system.insert(0, entry[4])
+        
+        self.ent_release.delete(0, "end")
+        self.ent_release.insert(0, entry[5])
+        
+        self.ent_rating.delete(0, "end")
+        self.ent_rating.insert(0, entry[6])        
 # Functions/global functions
 
 
