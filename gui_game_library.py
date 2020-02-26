@@ -99,7 +99,8 @@ class MainMenu(Screen):
         pop_up.title("Edit")
         
         frm_edit = EditSelect(pop_up)
-        frm_edit.grid(row=0, column=0)
+        frm_edit.grid(row=0, column=0, sticky='news')
+        pop_up.grid_columnconfigure(0, weight=1)
     
     # to go to search menu    
     def go_search(self):     
@@ -112,7 +113,8 @@ class MainMenu(Screen):
         pop_up_remove.title("Remove")
         
         frm_remove = Remove(pop_up_remove)
-        frm_remove.grid(row=0, column=0)
+        frm_remove.grid(row=0, column=0, sticky='news')
+        pop_up_remove.grid_columnconfigure(0, weight=1)
     
     # To save edits made to the library
     def go_save(self):
@@ -237,11 +239,14 @@ class EditSelect(tk.Frame):
         self.dbx_titles_to_edit.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command = self.go_mainmenu)
-        self.btn_cancel.grid(row=2, column=0)
+        self.btn_cancel.grid(row=2, column=0, sticky='news')
         
         self.btn_okay = tk.Button(self, text="OK", font=BUTTON_FONT, command = self.go_editor)
-        self.btn_okay.grid(row=2, column=1)
-    
+        self.btn_okay.grid(row=2, column=1, sticky='news')
+        
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        
     # For the cancel button    
     def go_mainmenu(self):
         Screen.current = 0
@@ -280,10 +285,10 @@ class Remove(tk.Frame):
         self.dbx_titles_to_remove.grid(row=1, column=0, columnspan=2, sticky='news')
         
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command=self.go_mainmenu)
-        self.btn_cancel.grid(row=2, column=0)
+        self.btn_cancel.grid(row=2, column=0, sticky='news')
         
         self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT)
-        self.btn_remove.grid(row=2, column=1)
+        self.btn_remove.grid(row=2, column=1, sticky='news')
         
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -400,10 +405,10 @@ class Editor(Screen):
         Screen.current = 0
         Screen.switch_frame()
     
+    # This function occurs when EditSelect is used. It LOADs the contents of the selected game inTO EDITor
     def load_to_edit(self):
-        # Just a list and index of each category
-        category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         entry = content.games[self.edit_key]
+        
         self.ent_genre.delete(0, "end")
         self.ent_genre.insert(0, entry[0])
         
@@ -423,7 +428,26 @@ class Editor(Screen):
         self.ent_release.insert(0, entry[5])
         
         self.ent_rating.delete(0, "end")
-        self.ent_rating.insert(0, entry[6])        
+        self.ent_rating.insert(0, entry[6])
+        
+        # Insert drop down menu stuff
+        for i in range(len(self.mode_options)):
+            if entry[7] == self.mode_options[i]:
+                self.tkvar_mode.set(self.mode_options[i])
+                break
+        
+        self.ent_price.delete(0, "end")
+        self.ent_price.insert(0, entry[8])
+        
+        # Enable/disable the check button
+        if entry[9].lower() == "yes":
+            self.chk_beat.select()
+        else:
+            self.chk_beat.deselect()
+        
+        self.ent_purchase.delete(0, "end")
+        self.ent_purchase.insert(0, entry[10])
+        
 # Functions/global functions
 
 
