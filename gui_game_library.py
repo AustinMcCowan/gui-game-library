@@ -390,7 +390,7 @@ class Editor(Screen):
         self.btn_clear = tk.Button(self, text="Clear")
         self.btn_clear.grid(row=8, column=2, columnspan=2, sticky='news')
         
-        self.btn_submit = tk.Button(self, text="Submit")
+        self.btn_submit = tk.Button(self, text="Submit", command=self.submit_edit)
         self.btn_submit.grid(row=8, column=4, columnspan=2, sticky='news')
         
         
@@ -448,6 +448,30 @@ class Editor(Screen):
         self.ent_purchase.delete(0, "end")
         self.ent_purchase.insert(0, entry[10])
         
+        self.scr_notes.delete(0.0, "end")
+        self.scr_notes.insert(0.0, entry[11])
+        
+    def submit_edit(self):
+        #category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
+        entry = []
+        entry.append(self.ent_genre.get())
+        entry.append(self.ent_title.get())
+        entry.append(self.ent_developer.get())
+        entry.append(self.ent_publisher.get())
+        entry.append(self.ent_system.get())
+        entry.append(self.ent_release.get())
+        entry.append(self.ent_rating.get())
+        entry.append("")
+        entry.append(self.ent_price.get())
+        entry.append("")
+        entry.append(self.ent_purchase.get())
+        entry.append(self.scr_notes.get(0.0, "end"))
+        
+        content.games[self.edit_key] = entry
+        Screen.current = 0
+        Screen.switch_frame()        
+
+       
 # Functions/global functions
 
 
