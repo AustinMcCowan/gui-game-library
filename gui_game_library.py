@@ -8,6 +8,8 @@ import pickle
 import data_reboot as dr
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
+from tkinter import messagebox
+
 
 # Constants
 TITLE_FONT = ("Times New Roman", 24)
@@ -91,7 +93,15 @@ class MainMenu(Screen):
     # to go to the add menu
     def go_add(self):
         Screen.current = 2
+        screens[Screen.current].clear()
         Screen.switch_frame()
+        
+        for i in range(len(content.games)):
+            if (i+1) not in content.games.keys():
+                screens[2].edit_key = i+1
+                break
+            else:
+                screens[2].edit_key = len(content.games)+1
     
     # to open the edit pop up
     def go_edit(self):
@@ -387,7 +397,7 @@ class Editor(Screen):
         self.btn_cancel = tk.Button(self, text="Cancel", command=self.go_mainmenu)
         self.btn_cancel.grid(row=8, column=0, columnspan=2, sticky='news')
         
-        self.btn_clear = tk.Button(self, text="Clear")
+        self.btn_clear = tk.Button(self, text="Clear", command=self.clear)
         self.btn_clear.grid(row=8, column=2, columnspan=2, sticky='news')
         
         self.btn_submit = tk.Button(self, text="Submit", command=self.submit_edit)
@@ -404,6 +414,7 @@ class Editor(Screen):
     def go_mainmenu(self):
         Screen.current = 0
         Screen.switch_frame()
+        self.clear()
     
     # This function occurs when EditSelect is used. It LOADs the contents of the selected game inTO EDITor
     def load_to_edit(self):
@@ -469,10 +480,24 @@ class Editor(Screen):
         entry.append(self.scr_notes.get(0.0, "end"))
         
         content.games[self.edit_key] = entry
+        
+        messagebox.showinfo(message="Entry saved")
         Screen.current = 0
-        Screen.switch_frame()        
+        Screen.switch_frame()
+        self.clear()
 
-       
+    def clear(self):
+        self.ent_genre.delete(0, "end")
+        self.ent_title.delete(0, "end")      
+        self.ent_developer.delete(0, "end")
+        self.ent_publisher.delete(0, "end")        
+        self.ent_system.delete(0, "end")
+        self.ent_release.delete(0, "end")
+        self.ent_rating.delete(0, "end")      
+        self.ent_price.delete(0, "end")
+        self.ent_purchase.delete(0, "end")
+        self.scr_notes.delete(0.0, "end")
+        self.chk_beat.deselect()
 # Functions/global functions
 
 
@@ -490,7 +515,6 @@ if __name__ == "__main__":
     screens[1].grid(row=0, column=0, sticky='news')
     screens[2].grid(row=0, column=0, sticky='news')
     
-    print(screens[2].dbx_mode.config())   
     root.grid_columnconfigure(0, weight=1)
     screens[0].tkraise()
     root.mainloop()
