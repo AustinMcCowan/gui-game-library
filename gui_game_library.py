@@ -432,8 +432,9 @@ class Editor(Screen):
         
         # Insert drop down menu stuff
         for i in range(len(self.mode_options)):
-            if entry[7] == self.mode_options[i]:
+            if entry[7].lower() == self.mode_options[i].lower():
                 self.tkvar_mode.set(self.mode_options[i])
+                self.dbx_mode.config(textvariable = self.tkvar_mode)
                 break
         
         self.ent_price.delete(0, "end")
@@ -488,7 +489,8 @@ if __name__ == "__main__":
     screens[0].grid(row=0, column=0, sticky='news')
     screens[1].grid(row=0, column=0, sticky='news')
     screens[2].grid(row=0, column=0, sticky='news')
-       
+    
+    print(screens[2].dbx_mode.config())   
     root.grid_columnconfigure(0, weight=1)
     screens[0].tkraise()
     root.mainloop()
