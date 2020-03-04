@@ -229,7 +229,7 @@ class Search(Screen):
         self.lbl_search_for.grid(row=3, column=0, columnspan=3, sticky='news')
         
         # Drop down menu
-        category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
+        category_list = ["None", "genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         self.tkvar_search = tk.StringVar(self)
         self.tkvar_search.set(category_list[0])
         
@@ -249,7 +249,7 @@ class Search(Screen):
         self.btn_back = tk.Button(self, font = BUTTON_FONT, text="Back", command = self.go_mainmenu)
         self.btn_back.grid(row=6, column=0, columnspan=2, sticky='news')
         
-        self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear")
+        self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear", command = self.clear)
         self.btn_clear.grid(row=6, column=2, columnspan=2, sticky='news')
         
         self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.search_update)
@@ -272,6 +272,18 @@ class Search(Screen):
             self.filter_print(entry)
     
     def clear(self):
+        self.frm_search_filters.genre_filter.set(False)
+        self.frm_search_filters.title_filter.set(False)
+        self.frm_search_filters.developer_filter.set(False)
+        self.frm_search_filters.publisher_filter.set(False)
+        self.frm_search_filters.system_filter.set(False)
+        self.frm_search_filters.release_filter.set(False)
+        self.frm_search_filters.rating_filter.set(False)
+        self.frm_search_filters.mode_filter.set(False)
+        self.frm_search_filters.price_filter.set(False)
+        self.frm_search_filters.beat_filter.set(False)
+        self.frm_search_filters.purchase_filter.set(False)
+        self.frm_search_filters.notes_filter.set(False)
         self.scr_text.delete(0.0, "end")
         
     # Functions    
