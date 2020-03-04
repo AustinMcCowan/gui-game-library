@@ -138,36 +138,69 @@ class SearchFilters(tk.Frame):
         self.lbl_print_filers = tk.Label(self, text="Print Filters")
         self.lbl_print_filers.grid(row=0, column=0, columnspan=3)
         
+        # Checkbutton genre
+        self.genre_filter = tk.BooleanVar()
+        self.genre_filter.set(True)
         self.chk_genre = tk.Checkbutton(self, text="Genre")
         self.chk_genre.grid(row=1, column=0)
-            
+        
+        # Checkbutton title
+        self.title_filter = tk.BooleanVar()
+        self.title_filter.set(True)            
         self.chk_title = tk.Checkbutton(self, text="Title")
         self.chk_title.grid(row=2, column=0)
         
+        # Checkbutton developer
+        self.developer_filter = tk.BooleanVar()
+        self.developer_filter.set(True)        
         self.chk_developer = tk.Checkbutton(self, text="Developer")
         self.chk_developer.grid(row=3, column=0)
         
+        # Checkbutton publisher
+        self.publisher_filter = tk.BooleanVar()
+        self.publisher_filter.set(True)        
         self.chk_publisher = tk.Checkbutton(self, text="Publisher")
         self.chk_publisher.grid(row=4, column=0) 
         
+        # Checkbutton system
+        self.system_filter = tk.BooleanVar()
+        self.system_filter.set(True)        
         self.chk_system = tk.Checkbutton(self, text="System")
         self.chk_system.grid(row=1, column=1) 
         
+        # Checkbutton release date
+        self.release_filter = tk.BooleanVar()
+        self.release_filter.set(True)        
         self.chk_release = tk.Checkbutton(self, text= "Release Date")
         self.chk_release.grid(row=2, column=1) 
         
+        # Checkbutton rating
+        self.rating_filter = tk.BooleanVar()
+        self.rating_filter.set(True)        
         self.chk_rating = tk.Checkbutton(self, text="Rating")
         self.chk_rating.grid(row=3, column=1) 
         
+        # Checkbutton mode
+        self.mode_filter = tk.BooleanVar()
+        self.mode_filter.set(True)        
         self.chk_mode = tk.Checkbutton(self, text="Game Mode")
         self.chk_mode.grid(row=4, column=1) 
         
+        # Checkbutton price
+        self.price_filter = tk.BooleanVar()
+        self.price_filter.set(True)        
         self.chk_price = tk.Checkbutton(self, text="Price")
         self.chk_price.grid(row=1, column=2) 
         
+        # Checkbutton beat it
+        self.beat_filter = tk.BooleanVar()
+        self.beat_filter.set(True)        
         self.chk_beat = tk.Checkbutton(self, text="Beat it?")
         self.chk_beat.grid(row=2, column=2) 
         
+        # Checkbutton purchase
+        self.purchase_filter = tk.BooleanVar()
+        self.purchase_filter.set(True)        
         self.chk_purchase = tk.Checkbutton(self, text="Purchase Date")
         self.chk_purchase.grid(row=3, column=2)     
         
@@ -464,7 +497,6 @@ class Editor(Screen):
         self.scr_notes.insert(0.0, entry[11])
         
     def submit_edit(self):
-        #category_list = ["genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         entry = []
         entry.append(self.ent_genre.get())
         entry.append(self.ent_title.get())
@@ -498,6 +530,7 @@ class Editor(Screen):
         self.ent_purchase.delete(0, "end")
         self.scr_notes.delete(0.0, "end")
         self.chk_beat.deselect()
+        
 # Functions/global functions
 
 
