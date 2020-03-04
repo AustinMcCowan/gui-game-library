@@ -141,68 +141,73 @@ class SearchFilters(tk.Frame):
         # Checkbutton genre
         self.genre_filter = tk.BooleanVar()
         self.genre_filter.set(True)
-        self.chk_genre = tk.Checkbutton(self, text="Genre")
+        self.chk_genre = tk.Checkbutton(self, text="Genre", variable = self.genre_filter)
         self.chk_genre.grid(row=1, column=0)
         
         # Checkbutton title
         self.title_filter = tk.BooleanVar()
         self.title_filter.set(True)            
-        self.chk_title = tk.Checkbutton(self, text="Title")
+        self.chk_title = tk.Checkbutton(self, text="Title", variable = self.title_filter)
         self.chk_title.grid(row=2, column=0)
         
         # Checkbutton developer
         self.developer_filter = tk.BooleanVar()
         self.developer_filter.set(True)        
-        self.chk_developer = tk.Checkbutton(self, text="Developer")
+        self.chk_developer = tk.Checkbutton(self, text="Developer", variable = self.developer_filter)
         self.chk_developer.grid(row=3, column=0)
         
         # Checkbutton publisher
         self.publisher_filter = tk.BooleanVar()
         self.publisher_filter.set(True)        
-        self.chk_publisher = tk.Checkbutton(self, text="Publisher")
+        self.chk_publisher = tk.Checkbutton(self, text="Publisher", variable = self.publisher_filter)
         self.chk_publisher.grid(row=4, column=0) 
         
         # Checkbutton system
         self.system_filter = tk.BooleanVar()
         self.system_filter.set(True)        
-        self.chk_system = tk.Checkbutton(self, text="System")
+        self.chk_system = tk.Checkbutton(self, text="System", variable = self.system_filter)
         self.chk_system.grid(row=1, column=1) 
         
         # Checkbutton release date
         self.release_filter = tk.BooleanVar()
         self.release_filter.set(True)        
-        self.chk_release = tk.Checkbutton(self, text= "Release Date")
+        self.chk_release = tk.Checkbutton(self, text= "Release Date", variable = self.release_filter)
         self.chk_release.grid(row=2, column=1) 
         
         # Checkbutton rating
         self.rating_filter = tk.BooleanVar()
         self.rating_filter.set(True)        
-        self.chk_rating = tk.Checkbutton(self, text="Rating")
+        self.chk_rating = tk.Checkbutton(self, text="Rating", variable = self.rating_filter)
         self.chk_rating.grid(row=3, column=1) 
         
         # Checkbutton mode
         self.mode_filter = tk.BooleanVar()
         self.mode_filter.set(True)        
-        self.chk_mode = tk.Checkbutton(self, text="Game Mode")
+        self.chk_mode = tk.Checkbutton(self, text="Game Mode", variable = self.mode_filter)
         self.chk_mode.grid(row=4, column=1) 
         
         # Checkbutton price
         self.price_filter = tk.BooleanVar()
         self.price_filter.set(True)        
-        self.chk_price = tk.Checkbutton(self, text="Price")
+        self.chk_price = tk.Checkbutton(self, text="Price", variable = self.price_filter)
         self.chk_price.grid(row=1, column=2) 
         
         # Checkbutton beat it
         self.beat_filter = tk.BooleanVar()
         self.beat_filter.set(True)        
-        self.chk_beat = tk.Checkbutton(self, text="Beat it?")
+        self.chk_beat = tk.Checkbutton(self, text="Beat it?", variable = self.beat_filter)
         self.chk_beat.grid(row=2, column=2) 
         
         # Checkbutton purchase
         self.purchase_filter = tk.BooleanVar()
         self.purchase_filter.set(True)        
-        self.chk_purchase = tk.Checkbutton(self, text="Purchase Date")
-        self.chk_purchase.grid(row=3, column=2)     
+        self.chk_purchase = tk.Checkbutton(self, text="Purchase Date", variable = self.purchase_filter)
+        self.chk_purchase.grid(row=3, column=2)
+        
+        self.notes_filter = tk.BooleanVar()
+        self.notes_filter.set(True)
+        self.chk_notes = tk.Checkbutton(self, text="Notes", variable=self.notes_filter)
+        self.chk_notes.grid(row=4, column=2)
         
         # grid column configures
         self.grid_columnconfigure(0, weight=1)
@@ -247,8 +252,8 @@ class Search(Screen):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear")
         self.btn_clear.grid(row=6, column=2, columnspan=2, sticky='news')
         
-        self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Submit")
-        self.btn_clear.grid(row=6, column=4, columnspan=2, sticky='news')
+        self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.search_update)
+        self.btn_submit.grid(row=6, column=4, columnspan=2, sticky='news')
         
         # Grid column configure
         self.grid_columnconfigure(0, weight=1)
@@ -257,12 +262,75 @@ class Search(Screen):
         self.grid_columnconfigure(3, weight=1)
         self.grid_columnconfigure(4, weight=1)
         self.grid_columnconfigure(5, weight=1)
+        
+        self.search_update()
     
+    def search_update(self):
+        self.scr_text.delete(0.0, "end")
+        for key in content.games.keys():
+            entry = content.games[key]
+            self.filter_print(entry)
+    
+    def clear(self):
+        self.scr_text.delete(0.0, "end")
+        
     # Functions    
     def go_mainmenu(self):
         Screen.current = 0
         Screen.switch_frame()   
+    
+    def filter_print(self, entry):
+        if self.frm_search_filters.genre_filter.get() == True:
+            msg = entry[0] + "\n"
+            self.scr_text.insert("insert", msg)
+            
+        if self.frm_search_filters.title_filter.get() == True:
+            msg = entry[1] + "\n"
+            self.scr_text.insert("insert", msg)
+            
+        if self.frm_search_filters.developer_filter.get() == True:
+            msg = entry[2] + "\n"
+            self.scr_text.insert("insert", msg)
         
+        if self.frm_search_filters.publisher_filter.get() == True:
+            msg = entry[3] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.system_filter.get() == True:
+            msg = entry[4] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.release_filter.get() == True:
+            msg = entry[5] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.rating_filter.get() == True:
+            msg = entry[6] + "\n"
+            self.scr_text.insert("insert", msg)
+            
+        if self.frm_search_filters.mode_filter.get() == True:
+            msg = entry[7] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.price_filter.get() == True:
+            msg = entry[8] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.beat_filter.get() == True:
+            msg = entry[9] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.purchase_filter.get() == True:
+            msg = entry[10] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        if self.frm_search_filters.notes_filter.get() == True:
+            msg = entry[11] + "\n"
+            self.scr_text.insert("insert", msg)
+        
+        msg = "---------------------------------------------\n"
+        self.scr_text.insert("insert", msg)
+    
 class EditSelect(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, master=parent)
