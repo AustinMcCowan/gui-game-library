@@ -254,7 +254,7 @@ class Search(Screen):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear", command = self.clear)
         self.btn_clear.grid(row=6, column=2, columnspan=2, sticky='news')
         
-        self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.filter_search)
+        self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.search_with_param)
         self.btn_submit.grid(row=6, column=4, columnspan=2, sticky='news')
         
         # Grid column configure
@@ -267,7 +267,8 @@ class Search(Screen):
         
         self.search_update()
         
-    def filter_search(self):
+    def search_with_param(self):
+        # grabs the values currently selected in the 'search by' drop down and typed in the 'search for' entry.
         search_for = self.ent_search_for.get()
         search_cat = self.tkvar_search.get()
         
@@ -278,9 +279,9 @@ class Search(Screen):
             # Searches through every entry in games
             for key in content.games.keys():
                 
-                ''' Since category_list is in the same order as the categories in games, we can do
-                self.category_list.index(search_cat)-1 to return the index of whatever category is being searched
-                Minus 1 to account for the placeholder text'''
+                ''' Since category_list is in the same order as the categories in games, do
+                self.category_list.index(search_cat)-1 to return the index of whatever category is being searched.
+                The minus 1 is to account for the placeholder text "None" '''
                 if search_for.lower() in content.games[key][self.category_list.index(search_cat)-1].lower():
                     entry = content.games[key]
                     self.filter_print(entry)
