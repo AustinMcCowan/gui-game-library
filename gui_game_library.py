@@ -281,7 +281,7 @@ class Search(Screen):
                 
                 ''' Since category_list is in the same order as the categories in games, do self.category_list.index(search_cat)-1
                  to return the index of whatever category is being searched. The minus 1 is to account for the placeholder text "None".
-                'list.index(value)' returns the index value of the first item in the list that is equal to value.'''
+                'list.index(value)' is basically: Loop through length of the list until value = list[i], then return i.'''
                 if search_for.lower() in content.games[key][self.category_list.index(search_cat)-1].lower():
                     entry = content.games[key]
                     self.filter_print(entry)
