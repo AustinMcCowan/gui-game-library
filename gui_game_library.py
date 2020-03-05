@@ -14,6 +14,8 @@ from tkinter import messagebox
 # Constants
 TITLE_FONT = ("Times New Roman", 24)
 BUTTON_FONT = ("Arial", 15)
+TEXT_LIST = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 
+             't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
 # Classes
 class Library(object):
@@ -81,7 +83,7 @@ class MainMenu(Screen):
         self.btn_remove.grid(row = 4, column = 1, sticky='news')
         
         # Save Button
-        self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT)
+        self.btn_save = tk.Button(self, text = "Save", font = BUTTON_FONT, command = content.save)
         self.btn_save.grid(row = 5, column = 1, sticky='news')                
         
         # Grid column configures    
@@ -229,11 +231,11 @@ class Search(Screen):
         self.lbl_search_for.grid(row=3, column=0, columnspan=3, sticky='news')
         
         # Drop down menu
-        category_list = ["None", "genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
+        self.category_list = ["None", "genre","title", "developer", "publisher", "system", "release date", "rating", "single/multi/either", "price", "beat it", "purchase date"]
         self.tkvar_search = tk.StringVar(self)
-        self.tkvar_search.set(category_list[0])
+        self.tkvar_search.set(self.category_list[0])
         
-        self.dbx_search_by = tk.OptionMenu(self, self.tkvar_search, *category_list)
+        self.dbx_search_by = tk.OptionMenu(self, self.tkvar_search, *self.category_list)
         self.dbx_search_by.grid(row=2, column=0, columnspan=3, sticky='news')
         
         # More widgets
@@ -252,7 +254,7 @@ class Search(Screen):
         self.btn_clear = tk.Button(self, font = BUTTON_FONT, text="Clear", command = self.clear)
         self.btn_clear.grid(row=6, column=2, columnspan=2, sticky='news')
         
-        self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.search_update)
+        self.btn_submit = tk.Button(self, font = BUTTON_FONT, text="Submit", command = self.filter_search)
         self.btn_submit.grid(row=6, column=4, columnspan=2, sticky='news')
         
         # Grid column configure
@@ -264,7 +266,30 @@ class Search(Screen):
         self.grid_columnconfigure(5, weight=1)
         
         self.search_update()
-    
+        
+    def filter_search(self):
+        search_for = self.ent_search_for.get()
+        search_cat = self.tkvar_search.get()
+        
+        # Make sure search category is not 'None'
+        if search_cat != self.category_list[0]:   
+            self.scr_text.delete(0.0, "end")
+            
+            # Searches through every entry in games
+            for key in content.games.keys():
+                
+                ''' Since category_list is in the same order as the categories in games, we can do
+                self.category_list.index(search_cat)-1 to return the index of whatever category is being searched
+                Minus 1 to account for the placeholder text'''
+                if search_for.lower() in content.games[key][self.category_list.index(search_cat)-1].lower():
+                    entry = content.games[key]
+                    self.filter_print(entry)
+                    
+        # If there is no search category selected (or rather 'None'), just run search_update
+        else:
+            self.search_update()
+            
+            
     def search_update(self):
         self.scr_text.delete(0.0, "end")
         for key in content.games.keys():
@@ -292,106 +317,107 @@ class Search(Screen):
         Screen.switch_frame()   
     
     def filter_print(self, entry):
+        # Used to detect text in an entry
         empty = True
-        text_list = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 
-                     't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
         
         if self.frm_search_filters.genre_filter.get() == True:
             msg = entry[0] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[0]:            
+            # If any text is present, a separating line can be used
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[0]:            
                     empty = False
             
         if self.frm_search_filters.title_filter.get() == True:
             msg = entry[1] + "\n"
             self.scr_text.insert("insert", msg)           
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[1]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[1]:            
                     empty = False
                     
         if self.frm_search_filters.developer_filter.get() == True:
             msg = entry[2] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[2]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[2]:            
                     empty = False            
         
         if self.frm_search_filters.publisher_filter.get() == True:
             msg = entry[3] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[3]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[3]:            
                     empty = False            
         
         if self.frm_search_filters.system_filter.get() == True:
             msg = entry[4] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[4]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[4]:            
                     empty = False            
         
         if self.frm_search_filters.release_filter.get() == True:
             msg = entry[5] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[5]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[5]:            
                     empty = False            
         
         if self.frm_search_filters.rating_filter.get() == True:
             msg = entry[6] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[6]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[6]:            
                     empty = False            
             
         if self.frm_search_filters.mode_filter.get() == True:
             msg = entry[7] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[7]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[7]:            
                     empty = False            
         
         if self.frm_search_filters.price_filter.get() == True:
             msg = entry[8] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[8]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[8]:            
                     empty = False            
         
         if self.frm_search_filters.beat_filter.get() == True:
             msg = entry[9] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[9]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[9]:            
                     empty = False            
         
         if self.frm_search_filters.purchase_filter.get() == True:
             msg = entry[10] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[10]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[10]:            
                     empty = False            
         
         if self.frm_search_filters.notes_filter.get() == True:
             msg = entry[11] + "\n"
             self.scr_text.insert("insert", msg)
             
-            for i in range(len(text_list)):
-                if text_list[i] in entry[11]:            
+            for i in range(len(TEXT_LIST)):
+                if TEXT_LIST[i] in entry[11]:            
                     empty = False            
-        
+                    
+        # If the entry in search contains anything, place a separating line to distinguish where one entry ends and one starts
         if empty == False:
             msg = "---------------------------------------------\n"
             self.scr_text.insert("insert", msg)
@@ -481,6 +507,18 @@ class Remove(tk.Frame):
         Screen.switch_frame()
         
         self.parent.destroy()
+        
+        
+class PopMessage(tk.Frame):
+    def __init__(self, parent, msg='generic'):
+        tk.Frame.__init__(self, master=parent)
+        self.parent = parent
+        
+        self.lbl_continue = tk.Label(self, text=msg)
+        self.lbl_continue.grid(row=0, column=0, sticky='news')
+        
+        self.btn_ok = tk.Button(self, text='OK', command=self.parent.destroy)
+        self.btn_ok.grid(row=1, column=0, sticky='news')
     
 class Editor(Screen):
     def __init__(self):
@@ -646,7 +684,13 @@ class Editor(Screen):
         
         content.games[self.edit_key] = entry
         
-        messagebox.showinfo(message="Entry saved")
+        popup = tk.Tk()
+        popup.title("title")
+        msg = "Entry Saved"
+        frm_error = PopMessage(popup, msg)
+        frm_error.grid(row=0, column=0)
+        
+        #messagebox.showinfo(message="Entry saved")
         Screen.current = 0
         Screen.switch_frame()
         self.clear()
