@@ -292,56 +292,70 @@ class Search(Screen):
         Screen.switch_frame()   
     
     def filter_print(self, entry):
+        empty = True
         if self.frm_search_filters.genre_filter.get() == True:
             msg = entry[0] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
             
         if self.frm_search_filters.title_filter.get() == True:
             msg = entry[1] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
             
         if self.frm_search_filters.developer_filter.get() == True:
             msg = entry[2] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.publisher_filter.get() == True:
             msg = entry[3] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.system_filter.get() == True:
             msg = entry[4] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.release_filter.get() == True:
             msg = entry[5] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.rating_filter.get() == True:
             msg = entry[6] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
             
         if self.frm_search_filters.mode_filter.get() == True:
             msg = entry[7] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.price_filter.get() == True:
             msg = entry[8] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.beat_filter.get() == True:
             msg = entry[9] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.purchase_filter.get() == True:
             msg = entry[10] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
         if self.frm_search_filters.notes_filter.get() == True:
             msg = entry[11] + "\n"
             self.scr_text.insert("insert", msg)
+            empty = False
         
-        msg = "---------------------------------------------\n"
-        self.scr_text.insert("insert", msg)
+        if empty == False:
+            msg = "---------------------------------------------\n"
+            self.scr_text.insert("insert", msg)
     
 class EditSelect(tk.Frame):
     def __init__(self, parent):
