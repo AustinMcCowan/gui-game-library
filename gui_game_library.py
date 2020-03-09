@@ -130,7 +130,7 @@ class MainMenu(Screen):
     
     # To save edits made to the library
     def go_save(self):
-        pass
+        content.save()
     
 class SearchFilters(tk.Frame):
     def __init__(self, parent):
