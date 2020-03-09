@@ -511,9 +511,9 @@ class Remove(tk.Frame):
         game_to_remove = self.tkvar_remove.get()
         index_of_remove = None
             
-        for i in range(len(self.titles)):
-            if game_to_remove == self.titles[i]:
-                index_of_remove = i
+        for key in content.games.keys():
+            if game_to_remove == content.games[key][1]:
+                index_of_remove = key
         
         try:
             for key in range(1, len(content.games)+1):
