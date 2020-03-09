@@ -479,8 +479,11 @@ class Remove(tk.Frame):
         
         self.lbl_title = tk.Label(self, text="Which game would you like to remove?")
         self.lbl_title.grid(row=0, column=0, columnspan=2)
-        
-        self.titles = ["placeholder I", "placeholder II"]
+             
+        self.titles = ["Please Choose a game..."]
+        for key in content.games.keys():
+            self.titles.append(content.games[key][1])
+            
         self.tkvar_remove = tk.StringVar(self)
         self.tkvar_remove.set(self.titles[0])
         
@@ -490,7 +493,7 @@ class Remove(tk.Frame):
         self.btn_cancel = tk.Button(self, text="Cancel", font=BUTTON_FONT, command=self.go_mainmenu)
         self.btn_cancel.grid(row=2, column=0, sticky='news')
         
-        self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT)
+        self.btn_remove = tk.Button(self, text="Remove", font=BUTTON_FONT, command=self.remove_game)
         self.btn_remove.grid(row=2, column=1, sticky='news')
         
         self.grid_columnconfigure(0, weight=1)
@@ -504,10 +507,26 @@ class Remove(tk.Frame):
         self.parent.destroy()
         
     def remove_game(self):
-        Screen.current = 0
-        Screen.switch_frame()
+        temp_dictionary = content.games
+        game_to_remove = self.tkvar_remove.get()
+        index_of_remove = None
+            
+        for i in range(len(self.titles)):
+            if game_to_remove == self.titles[i]:
+                index_of_remove = i
         
-        self.parent.destroy()
+        try:
+            for key in range(1, len(content.games)+1):
+                if key >= index_of_remove and key != len(content.games):
+                    content.games[key] = content.games[key+1]
+                if key == len(content.games):
+                    content.games.pop(key)
+        except:
+            # Failsafe
+            content.games = temp_dictionary
+            content.games.pop(index_of_remove)        
+            
+        self.go_mainmenu()
         
         
 class PopMessage(tk.Frame):
