@@ -584,7 +584,9 @@ class Editor(Screen):
         self.ent_price = tk.Entry(self)
         self.ent_price.grid(row=4, column=1, columnspan=2, sticky='news')
         
-        self.chk_beat = tk.Checkbutton(self, text="Beat it?")
+        self.boolean_beat_it = tk.BooleanVar()
+        self.boolean_beat_it.set(False)
+        self.chk_beat = tk.Checkbutton(self, variable=self.boolean_beat_it, text="Beat it?")
         self.chk_beat.grid(row=4, column=3, columnspan=3, sticky='news')
         
         self.lbl_purchase = tk.Label(self, text="Purchase")
@@ -677,9 +679,12 @@ class Editor(Screen):
         entry.append(self.ent_system.get())
         entry.append(self.ent_release.get())
         entry.append(self.ent_rating.get())
-        entry.append("")
+        entry.append(self.tkvar_mode.get())
         entry.append(self.ent_price.get())
-        entry.append("")
+        if self.boolean_beat_it.get() == True:
+            entry.append("yes")
+        else:
+            entry.append("no")
         entry.append(self.ent_purchase.get())
         entry.append(self.scr_notes.get(0.0, "end"))
         
